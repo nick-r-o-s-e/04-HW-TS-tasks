@@ -4,6 +4,23 @@ const logNumberOfTheTask = (num: number): void =>
     "color: yellow; background-color: #202124"
   );
 
+////////////////////////MAIN OBJECT TYPES/////////////////////////////////////
+type StringValObj = {
+  [key: string]: string;
+};
+
+type NumberValObj = {
+  [key: string]: number;
+};
+
+type StringOrNumberValObj = {
+  [key: string]: string | number;
+};
+
+type StringArraysValObj = {
+  [key: string]: string[];
+};
+
 // Write a function that takes two numbers (a and b) as argument
 // Sum a and b
 logNumberOfTheTask(1);
@@ -498,7 +515,8 @@ console.log(concatArrays([true, true], [1, 2], ["a", "b"]));
 // Return the sorted array
 logNumberOfTheTask(38);
 
-const sortByPropertyB = (a: any[]): object[] => a.sort((a, b) => a.b - b.b);
+const sortByPropertyB = (a: NumberValObj[]): NumberValObj[] =>
+  a.sort((a, b) => a.b - b.b);
 
 console.log(
   sortByPropertyB([
@@ -570,7 +588,7 @@ console.log(numsInTheRange(2, 7));
 // { a: ['Alf', 'Alice'], b: ['Ben']}
 logNumberOfTheTask(42);
 
-const sortedStringsObject = (arr: string[]): object => {
+const sortedStringsObject = (arr: string[]): StringArraysValObj => {
   let result: any = {};
   arr
     .sort(
@@ -624,7 +642,7 @@ console.log(saveEveryNth([7, 2, 1, 6, 3, 4, 5, 8, 9, 10], 2));
 // It should return the value of the property with key country
 logNumberOfTheTask(45);
 
-const getCountry = (obj: any): string => obj.country;
+const getCountry = (obj: StringValObj): string => obj.country;
 
 console.log(getCountry({ continent: "Asia", country: "Japan" }));
 console.log(getCountry({ country: "Sweden", continent: "Europe" }));
@@ -634,7 +652,8 @@ console.log(getCountry({ country: "Sweden", continent: "Europe" }));
 // Tip: you might want to use the square brackets property accessor
 logNumberOfTheTask(46);
 
-const getProp2 = (obj: any): any => obj["prop-2"];
+const getProp2 = (obj: Record<string, string | number>): string | number =>
+  obj["prop-2"];
 
 console.log(getProp2({ one: 1, "prop-2": 2 }));
 console.log(getProp2({ "prop-2": "two", prop: "test" }));
@@ -643,7 +662,7 @@ console.log(getProp2({ "prop-2": "two", prop: "test" }));
 // It should return the value of the property with key equal to the value of the string
 logNumberOfTheTask(47);
 
-const valueOfString = (obj: any, str: string) => obj[str];
+const valueOfString = (obj: StringValObj, str: string) => obj[str];
 
 console.log(
   valueOfString({ continent: "Asia", country: "Japan" }, "continent")
@@ -657,8 +676,10 @@ console.log(
 // Return false otherwise
 logNumberOfTheTask(48);
 
-const hasProperty = (obj: any, str: string): boolean =>
-  obj[str] ? true : false;
+const hasProperty = (
+  obj: Record<string, string | number>,
+  str: string
+): boolean => (obj[str] ? true : false);
 
 console.log(hasProperty({ a: 1, b: 2, c: 3 }, "b"));
 console.log(hasProperty({ x: "a", y: "b", z: "c" }, "a"));
@@ -669,7 +690,7 @@ console.log(hasProperty({ x: "a", y: "b", z: "c" }, "z"));
 // Return the object
 logNumberOfTheTask(49);
 
-const objWithXvalue = (a: string): object => new Object({ key: a });
+const objWithXvalue = (a: string): StringValObj => ({ key: a });
 
 console.log(objWithXvalue("a"));
 console.log(objWithXvalue("z"));
@@ -680,8 +701,7 @@ console.log(objWithXvalue("b"));
 // Return the object
 logNumberOfTheTask(50);
 
-const objWithXkeyYvalue = (a: string, b: string): object =>
-  new Object({ [a]: b });
+const objWithXkeyYvalue = (a: string, b: string): StringValObj => ({ [a]: b });
 
 console.log(objWithXkeyYvalue("a", "b"));
 console.log(objWithXkeyYvalue("z", "x"));
@@ -692,8 +712,11 @@ console.log(objWithXkeyYvalue("b", "w"));
 // Return the object
 logNumberOfTheTask(51);
 
-const objWithArraysKeyValues = (a: any[], b: any[]): object => {
-  let result: any = {};
+const objWithArraysKeyValues = (
+  a: (string | number)[],
+  b: (string | number)[]
+): StringOrNumberValObj => {
+  let result: StringOrNumberValObj = {};
   a.forEach((item, index) => (result[item] = b.at(index)));
   return result;
 };
@@ -706,7 +729,7 @@ console.log(objWithArraysKeyValues([1, "b"], ["a", 2]));
 // Return an array with all object keys
 logNumberOfTheTask(52);
 
-const getKeys = (obj: object): any[] => Object.keys(obj);
+const getKeys = (obj: NumberValObj): string[] => Object.keys(obj);
 
 console.log(getKeys({ a: 1, b: 2, c: 3 }));
 console.log(getKeys({ j: 9, i: 2, x: 3, z: 4 }));
@@ -716,7 +739,7 @@ console.log(getKeys({ w: 15, x: 22, y: 13 }));
 // Return the sum of all object values
 logNumberOfTheTask(53);
 
-const getSumOfValues = (obj: object): number =>
+const getSumOfValues = (obj: NumberValObj): number =>
   Object.values(obj).reduce((a, b) => a + b);
 
 console.log(getSumOfValues({ a: 1, b: 2, c: 3 }));
@@ -728,7 +751,7 @@ console.log(getSumOfValues({ w: 15, x: 22, y: 13 }));
 // except for the property with key 'b'
 logNumberOfTheTask(54);
 
-const withoutKeyB = (obj: object): object =>
+const withoutKeyB = (obj: NumberValObj): NumberValObj =>
   Object.fromEntries(Object.entries(obj).filter((pair) => pair[0] != "b"));
 
 console.log(withoutKeyB({ a: 1, b: 7, c: 3 }));
@@ -743,9 +766,12 @@ console.log(withoutKeyB({ e: 6, f: 4, b: 5, a: 3 }));
 // It should have the properties 'a', 'b', 'c', 'd', and 'e'
 logNumberOfTheTask(55);
 
-const mergeObjectsWithKeyD = (obj1: object, obj2: object): object => {
+const mergeObjectsWithKeyD = (
+  obj1: NumberValObj,
+  obj2: NumberValObj
+): NumberValObj => {
   //TO SUIT EXPECTED ANSWERS
-  let tempB: any = obj2;
+  let tempB: NumberValObj = obj2;
   tempB["d"] = tempB["b"];
   delete tempB["b"];
   return { ...obj1, ...tempB };
@@ -768,7 +794,7 @@ console.log(mergeObjectsWithKeyD({ a: 5, b: 4 }, { c: 3, b: 1, e: 2 }));
 // Return the resulting object
 logNumberOfTheTask(56);
 
-const mulitplyObjValues = (obj: object, n: number): object =>
+const mulitplyObjValues = (obj: NumberValObj, n: number): NumberValObj =>
   Object.fromEntries(Object.entries(obj).map((pair) => [pair[0], pair[1] * n]));
 
 console.log(mulitplyObjValues({ a: 1, b: 2, c: 3 }, 3));
@@ -780,7 +806,7 @@ console.log(mulitplyObjValues({ w: 15, x: 22, y: 13 }, 6));
 // Swap the Javascript object's key with its values and return the resulting object
 logNumberOfTheTask(57);
 
-const swapKeyAndValues = (obj: object): object =>
+const swapKeyAndValues = (obj: StringOrNumberValObj): StringValObj =>
   Object.fromEntries(Object.entries(obj).map((pair) => pair.reverse()));
 
 console.log(swapKeyAndValues({ z: "a", y: "b", x: "c", w: "d" }));
@@ -793,7 +819,7 @@ console.log(swapKeyAndValues({ a: 1, z: 24 }));
 // Return the resulting object
 logNumberOfTheTask(58);
 
-const emptyAsNull = (obj: object): object =>
+const emptyAsNull = (obj: StringValObj): Record<string, string | null> =>
   Object.fromEntries(
     Object.entries(obj).map((pair) =>
       pair[1].trim() == "" ? [pair[0], null] : pair
@@ -812,7 +838,7 @@ console.log(emptyAsNull({ a: "a", b: "b ", c: " ", d: "" }));
 // Return a new object with all available properties that we are interested in
 logNumberOfTheTask(59);
 
-const addUnits = (obj: object): object =>
+const addUnits = (obj: StringOrNumberValObj): StringValObj =>
   Object.fromEntries(
     Object.entries(obj)
       .map((pair) => {
@@ -861,7 +887,7 @@ console.log(
 // Tip: try not to mutate the original array
 logNumberOfTheTask(60);
 
-const addContinent = (objects: object[], str: string): object[] =>
+const addContinent = (objects: StringValObj[], str: string): StringValObj[] =>
   objects.map((obj) => ({ ...obj, continent: str }));
 
 console.log(
@@ -889,7 +915,7 @@ console.log(
 // The corresponding object value should be the number of times the key occurs within the array
 logNumberOfTheTask(61);
 
-const occurrencesInTheArray = (arr: number[]): object => {
+const occurrencesInTheArray = (arr: number[]): NumberValObj => {
   let result: any = {};
   for (let num of arr) {
     if (result[num]) {
@@ -984,7 +1010,10 @@ console.log(unshiftString(["Apple", "Orange", "Banana"], "Kiwi"));
 // objects
 logNumberOfTheTask(68);
 
-const mergeObjects = (obj1: object, obj2: object): object => ({
+const mergeObjects = (
+  obj1: NumberValObj,
+  obj2: NumberValObj
+): NumberValObj => ({
   ...obj1,
   ...obj2,
 });
@@ -997,7 +1026,10 @@ console.log(mergeObjects({ a: 1, b: 2 }, { c: 3, d: 4, e: 5, f: 6 }));
 // and a new property favoriteMovie with the value equal to the given string
 logNumberOfTheTask(69);
 
-const addMovie = (obj: object, str: string): object => ({
+const addMovie = (
+  obj: StringOrNumberValObj,
+  str: string
+): StringOrNumberValObj => ({
   ...obj,
   favoriteMovie: str,
 });
